@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/loop_time"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="loop time interval(ms) "
+        android:inputType="number"
+        android:text="200" />
+
+    <Button
+        android:id="@+id/start_loop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Start Loop" />
+
+    <Button
+        android:id="@+id/stop_loop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Stop Loop" />
+
+    <com.zt.simplerecyclerviewpager.LoopRecyclerViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:clipToPadding="false"
+        android:paddingBottom="15dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="15dp" />
+</LinearLayout>
