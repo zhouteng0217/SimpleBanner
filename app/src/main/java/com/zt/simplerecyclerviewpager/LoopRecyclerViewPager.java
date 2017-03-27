@@ -24,6 +24,8 @@ public class LoopRecyclerViewPager extends RecyclerView {
     private int mMinimumFlingVelocity;
     private LoopRecyclerViewAdapter mViewPagerAdapter;
     private long loopTimeInterval = 0;
+    private OnPageChangedListener onPageChangedListener;
+    private int oldPosition = 0;
 
     public LoopRecyclerViewPager(Context context) {
         this(context, null);
@@ -44,7 +46,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         mViewPagerAdapter = ensureRecyclerViewPagerAdapter(adapter);
         super.setAdapter(mViewPagerAdapter);
-        if(mViewPagerAdapter.isSupportLoop()) {
+        if (mViewPagerAdapter.isSupportLoop()) {
             scrollToItem(1);
         }
     }
@@ -82,7 +84,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
                 velocityTracker.recycle();
                 velocityTracker = null;
 
-                if(getItemCount() < minLoopStartCount) {
+                if (getItemCount() < minLoopStartCount) {
                     return super.dispatchTouchEvent(ev);
                 }
 
@@ -95,29 +97,46 @@ public class LoopRecyclerViewPager extends RecyclerView {
                 }
 
                 if (dx > scrollDistance || (dx > 0 && Math.abs(velocityX) > mMinimumFlingVelocity)) {
-                      scrollToItem(--currentPosition);
+                    scrollToItem(currentPosition, currentPosition - 1);
                 } else if (dx < -scrollDistance || (dx < 0 && Math.abs(velocityX) > mMinimumFlingVelocity)) {
-                    scrollToItem(++currentPosition);
+                    scrollToItem(currentPosition, currentPosition + 1);
                 }
                 return true;
         }
         return super.dispatchTouchEvent(ev);
     }
 
-    //
-    public void scrollToItem(int pos) {
-        if (pos == 0) {
+    private void scrollToItem(int oldPos, int newPos) {
+        oldPosition = oldPos;
+        if (oldPos == 0) {
+            oldPos = getActualItemCount() - 1;
+        } else if (oldPos == getItemCount() - 1) {
+            oldPos = 1;
+        } else {
+            oldPos--;
+        }
+
+        currentPosition = newPos;
+        boolean isSmoothScroll = true;
+        if (currentPosition == 0) {
             currentPosition = getItemCount() - 2;
-            scrollToPosition(currentPosition);
-            return;
-        }
-        if (pos == getItemCount() - 1) {
+            isSmoothScroll = false;
+        } else if (currentPosition == getItemCount() - 1) {
             currentPosition = 1;
-            scrollToPosition(currentPosition);
-            return;
+            isSmoothScroll = false;
         }
-        currentPosition = pos;
-        smoothScrollToPosition(currentPosition);
+        if (isSmoothScroll) {
+            smoothScrollToPosition(currentPosition);
+        } else {
+            scrollToPosition(currentPosition);
+        }
+        if (onPageChangedListener != null) {
+            onPageChangedListener.OnPageChanged(oldPos, currentPosition - 1);
+        }
+    }
+
+    public void scrollToItem(int pos) {
+        scrollToItem(currentPosition, pos);
     }
 
     @Override
@@ -127,6 +146,10 @@ public class LoopRecyclerViewPager extends RecyclerView {
                 return super.onTouchEvent(e);
         }
         return true;
+    }
+
+    private int getActualItemCount() {
+        return mViewPagerAdapter.getActualItemCount();
     }
 
     private int getItemCount() {
@@ -145,13 +168,13 @@ public class LoopRecyclerViewPager extends RecyclerView {
     public void startLoop(long time) {
         removeCallbacks(loopRunnable);
         loopTimeInterval = time;
-        if(loopTimeInterval > 0) {
-            postDelayed(loopRunnable,loopTimeInterval);
+        if (loopTimeInterval > 0) {
+            postDelayed(loopRunnable, loopTimeInterval);
         }
     }
 
     public void stopLoop() {
-        if(loopTimeInterval > 0) {
+        if (loopTimeInterval > 0) {
             removeCallbacks(loopRunnable);
         }
     }
@@ -159,12 +182,20 @@ public class LoopRecyclerViewPager extends RecyclerView {
     private Runnable loopRunnable = new Runnable() {
         @Override
         public void run() {
-            scrollToItem(++currentPosition);
+            scrollToItem(currentPosition + 1);
             if (loopTimeInterval > 0) {
                 postDelayed(this, loopTimeInterval);
             }
         }
     };
+
+    public void setOnPageChangedListener(OnPageChangedListener onPageChangedListener) {
+        this.onPageChangedListener = onPageChangedListener;
+    }
+
+    public interface OnPageChangedListener {
+        void OnPageChanged(int oldPosition, int newPosition);
+    }
 
     public void onResume() {
         startLoop(loopTimeInterval);
