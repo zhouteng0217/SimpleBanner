@@ -124,7 +124,7 @@ public class LoopRecyclerViewAdapter <VH extends RecyclerView.ViewHolder> extend
     }
 
     public boolean isSupportLoop() {
-        return getActualItemCount() > mViewPager.getMinLoopStartCount();
+        return getActualItemCount() >= mViewPager.getMinLoopStartCount();
     }
 
     @Override
