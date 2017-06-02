@@ -100,6 +100,8 @@ public class LoopRecyclerViewPager extends RecyclerView {
                     scrollToItem(currentPosition, currentPosition - 1);
                 } else if (dx < -scrollDistance || (dx < 0 && Math.abs(velocityX) > mMinimumFlingVelocity)) {
                     scrollToItem(currentPosition, currentPosition + 1);
+                } else {
+                    return super.dispatchTouchEvent(ev);
                 }
                 return true;
         }
