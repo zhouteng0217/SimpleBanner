@@ -96,6 +96,11 @@ public class LoopRecyclerViewPager extends RecyclerView {
                     return super.dispatchTouchEvent(ev);
                 }
 
+                if (Math.abs(dx) <= 20) {
+                    //点击事件以及长按事件
+                    return super.dispatchTouchEvent(ev);
+                }
+
                 if (dx > scrollDistance || (dx > 0 && Math.abs(velocityX) > mMinimumFlingVelocity)) {
                     scrollToItem(currentPosition, currentPosition - 1);
                 } else if (dx < -scrollDistance || (dx < 0 && Math.abs(velocityX) > mMinimumFlingVelocity)) {
