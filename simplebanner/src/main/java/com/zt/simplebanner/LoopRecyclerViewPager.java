@@ -1,4 +1,4 @@
-package com.zt.simplerecyclerviewpager;
+package com.zt.simplebanner;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhouteng on 2017/3/26.
@@ -24,7 +27,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
     private int mMinimumFlingVelocity;
     private LoopRecyclerViewAdapter mViewPagerAdapter;
     private long loopTimeInterval = 0;
-    private OnPageChangedListener onPageChangedListener;
+    private List<OnPageChangedListener> onPageChangedListeners = new ArrayList<>();
     private int oldPosition = 0;
 
     public LoopRecyclerViewPager(Context context) {
@@ -113,7 +116,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
         return super.dispatchTouchEvent(ev);
     }
 
-    private void scrollToItem(int oldPos, int newPos) {
+    public void scrollToItem(int oldPos, int newPos) {
         oldPosition = oldPos;
         if (oldPos == 0) {
             oldPos = getActualItemCount() - 1;
@@ -122,7 +125,6 @@ public class LoopRecyclerViewPager extends RecyclerView {
         } else {
             oldPos--;
         }
-
         currentPosition = newPos;
         boolean isSmoothScroll = true;
         if (currentPosition == 0) {
@@ -137,8 +139,10 @@ public class LoopRecyclerViewPager extends RecyclerView {
         } else {
             scrollToPosition(currentPosition);
         }
-        if (onPageChangedListener != null) {
-            onPageChangedListener.OnPageChanged(oldPos, currentPosition - 1);
+        if (onPageChangedListeners != null) {
+            for (OnPageChangedListener listener : onPageChangedListeners) {
+                listener.OnPageChanged(oldPos, currentPosition - 1);
+            }
         }
     }
 
@@ -155,12 +159,31 @@ public class LoopRecyclerViewPager extends RecyclerView {
         return true;
     }
 
-    private int getActualItemCount() {
+    /**
+     * 前后加一张之后的数量
+     *
+     * @return
+     */
+    public int getItemCount() {
+        return getAdapter() != null ? getAdapter().getItemCount() : 0;
+    }
+
+    /**
+     * 实际看到的张数
+     *
+     * @return
+     */
+    public int getActualItemCount() {
         return mViewPagerAdapter.getActualItemCount();
     }
 
-    private int getItemCount() {
-        return getAdapter() != null ? getAdapter().getItemCount() : 0;
+    /**
+     * 获取当前
+     *
+     * @return
+     */
+    public int getCurrentPosition() {
+        return currentPosition;
     }
 
     public int getMinLoopStartCount() {
@@ -196,8 +219,10 @@ public class LoopRecyclerViewPager extends RecyclerView {
         }
     };
 
-    public void setOnPageChangedListener(OnPageChangedListener onPageChangedListener) {
-        this.onPageChangedListener = onPageChangedListener;
+    public void addOnPageChangedListener(OnPageChangedListener onPageChangedListener) {
+        if (onPageChangedListener != null) {
+            onPageChangedListeners.add(onPageChangedListener);
+        }
     }
 
     public interface OnPageChangedListener {

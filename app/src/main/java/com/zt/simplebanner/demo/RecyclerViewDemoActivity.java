@@ -1,57 +1,31 @@
-package com.zt.simplerecyclerviewpager;
+package com.zt.simplebanner.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+import com.zt.simplebanner.LoopRecyclerViewPager;
+
+public class RecyclerViewDemoActivity extends AppCompatActivity {
 
     private LoopRecyclerViewPager mRecyclerViewPager;
-    private EditText mLoopTime;
-    private Button mStartLoop;
-    private Button mStopLoop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-
-        mLoopTime = (EditText) findViewById(R.id.loop_time);
-        mStartLoop = (Button) findViewById(R.id.start_loop);
-        mStopLoop = (Button) findViewById(R.id.stop_loop);
-        mStartLoop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int time = mLoopTime.getText() != null ? Integer.valueOf(mLoopTime
-                        .getText()
-                        .toString()) : 0;
-                mRecyclerViewPager.startLoop(time);
-            }
-        });
-        mStopLoop.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mRecyclerViewPager.stopLoop();
-            }
-        });
-
+        setContentView(R.layout.aty_recyclerview_demo);
         initViewPager();
-
     }
 
     private void initViewPager() {
 
         mRecyclerViewPager = (LoopRecyclerViewPager) findViewById(R.id.viewpager);
-        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-                false);
+        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerViewPager.setLayoutManager(layout);
         mRecyclerViewPager.setHasFixedSize(true);
-        mRecyclerViewPager.setAdapter(new LayoutAdapter(this, mRecyclerViewPager));
+        mRecyclerViewPager.setAdapter(new RecyclerViewDemoAdpater(this));
 
         mRecyclerViewPager.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

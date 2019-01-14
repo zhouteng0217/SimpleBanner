@@ -2,36 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="15dp">
 
-    <EditText
-        android:id="@+id/loop_time"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="loop time interval(ms) "
-        android:inputType="number"
-        android:text="200" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="该demo演示了，使用recyclerview和使用scrollview来实现的，自动轮播的banner" />
 
     <Button
-        android:id="@+id/start_loop"
-        android:layout_width="match_parent"
+        android:id="@+id/recyclerview_demo"
+        android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="Start Loop" />
+        android:layout_marginTop="30dp"
+        android:onClick="onClick"
+        android:text="RecyclerView实现"
+        android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/stop_loop"
-        android:layout_width="match_parent"
+        android:id="@+id/scrollview_demo"
+        android:layout_width="200dp"
         android:layout_height="50dp"
-        android:text="Stop Loop" />
+        android:layout_marginTop="10dp"
+        android:onClick="onClick"
+        android:text="ScrollView实现"
+        android:textAllCaps="false" />
 
-    <com.zt.simplerecyclerviewpager.LoopRecyclerViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:clipToPadding="false"
-        android:paddingBottom="15dp"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:paddingTop="15dp" />
+
 </LinearLayout>

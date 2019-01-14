@@ -1,4 +1,4 @@
-package com.zt.simplerecyclerviewpager;
+package com.zt.simplebanner;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -129,7 +129,7 @@ public class LoopRecyclerViewAdapter <VH extends RecyclerView.ViewHolder> extend
 
     @Override
     public int getItemViewType(int position) {
-        return mAdapter.getItemViewType(position);
+        return mAdapter.getItemViewType(getActualPosition(position));
     }
 
     @Override
