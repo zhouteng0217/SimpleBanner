@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 /**
  * Created by zhouteng on 2017/3/27.
+ *
  */
 
 public class LoopRecyclerViewAdapter <VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
