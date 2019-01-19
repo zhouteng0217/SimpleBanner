@@ -4,10 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zt.simplebanner.LoopRecyclerViewPager
-        android:id="@+id/viewpager"
+    <com.zt.simplebanner.demo.recyclerview.RecyclerBannerView
+        android:id="@+id/recycler_banner_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="wrap_content" />
 
+    <RadioGroup
+        android:id="@+id/style_radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="样式1(全屏宽度样式切换)" />
+
+        <RadioButton
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="样式2(非全屏宽度，有间距样式切换)" />
+
+        <RadioButton
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="样式3(划动时，放大缩小效果样式)" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="自动轮播，时间间隔1000ms" />
 
 </LinearLayout>

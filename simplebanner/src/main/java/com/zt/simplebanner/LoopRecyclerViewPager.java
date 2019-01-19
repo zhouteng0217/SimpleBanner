@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
@@ -14,21 +15,34 @@ import java.util.List;
 
 /**
  * Created by zhouteng on 2017/3/26.
+ * <p>
+ * 支持循环滑动的recyclerviev，实现原理是，在其adapter中，实际数据源的头尾添加2个数据，形成新的数据源，新的数据源的头部数据等于实际数据源的尾部数据，
+ * 新数据的尾部数据，等于实际数据源的头部数据
+ * <p>
+ * 重写触摸事件，实现最后一张和第一张的切换
  */
 
 public class LoopRecyclerViewPager extends RecyclerView {
 
+    private static final String TAG = "LoopRecyclerViewPager";
+
+    private static int scrollDistance = 300;
+
     private int currentPosition = 0;
-    private int scrollDistance = 300;
-    private int minLoopStartCount = 2; //设置至少几张开始支持循环滑动，默认2张以上支持循环滑动
+    private int minLoopStartCount = 2; //设置至少几张开始支持循环滑动，默认2张以及以上支持循环滑动
     private MotionEvent startEvent;
     private VelocityTracker velocityTracker;
     private int mMaximumFlingVelocity;
     private int mMinimumFlingVelocity;
     private LoopRecyclerViewAdapter mViewPagerAdapter;
     private long loopTimeInterval = 0;
-    private List<OnPageChangedListener> onPageChangedListeners = new ArrayList<>();
     private int oldPosition = 0;
+    private boolean isLooping = false; //是否自动轮播
+
+    private boolean isLoopingWhenTouchDown = false; //手动滑动滑动banner时，首先暂停自动轮播，该变量用于记住手指触摸banner时，是否正在轮播
+
+    private List<OnPageChangedListener> onPageChangedListeners = new ArrayList<>();
+
 
     public LoopRecyclerViewPager(Context context) {
         this(context, null);
@@ -67,7 +81,11 @@ public class LoopRecyclerViewPager extends RecyclerView {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                stopLoop();
+                isLoopingWhenTouchDown = isLooping;
+                Log.d(TAG, "ACTION_DOWN isLooping=" + isLooping);
+                if (isLooping) {
+                    stopLoop();
+                }
                 startEvent = MotionEvent.obtain(ev);
                 if (velocityTracker == null) {
                     velocityTracker = VelocityTracker.obtain();
@@ -77,10 +95,14 @@ public class LoopRecyclerViewPager extends RecyclerView {
                 velocityTracker.addMovement(ev);
                 break;
             case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "ACTION_MOVE");
                 velocityTracker.addMovement(ev);
                 break;
             case MotionEvent.ACTION_UP:
-                startLoop(loopTimeInterval);
+                Log.d(TAG, "ACTION_UP isLoopingWhenTouchDown=" + isLoopingWhenTouchDown);
+                if (isLoopingWhenTouchDown) {
+                    startLoop(loopTimeInterval);
+                }
                 velocityTracker.computeCurrentVelocity(1000, mMaximumFlingVelocity);
                 int pointerId = ev.getPointerId(0);
                 float velocityX = velocityTracker.getXVelocity(pointerId);
@@ -199,12 +221,14 @@ public class LoopRecyclerViewPager extends RecyclerView {
         removeCallbacks(loopRunnable);
         loopTimeInterval = time;
         if (loopTimeInterval > 0) {
+            isLooping = true;
             postDelayed(loopRunnable, loopTimeInterval);
         }
     }
 
     public void stopLoop() {
         if (loopTimeInterval > 0) {
+            isLooping = false;
             removeCallbacks(loopRunnable);
         }
     }

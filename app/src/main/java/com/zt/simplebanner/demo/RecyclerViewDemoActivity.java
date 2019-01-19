@@ -1,103 +1,74 @@
+/*
+ * Copyright (c) 2019.
+ */
+
 package com.zt.simplebanner.demo;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 
-import com.zt.simplebanner.LoopRecyclerViewPager;
+import com.zt.simplebanner.demo.recyclerview.RecyclerBannerView;
 
-public class RecyclerViewDemoActivity extends AppCompatActivity {
+public class RecyclerViewDemoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
-    private LoopRecyclerViewPager mRecyclerViewPager;
+    private RecyclerBannerView bannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_recyclerview_demo);
-        initViewPager();
+        bannerView = (RecyclerBannerView) findViewById(R.id.recycler_banner_view);
+        bannerView.bindData();
+
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.style_radio_group);
+        radioGroup.setOnCheckedChangeListener(this);
+        radioGroup.check(R.id.button1);
+
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
+        checkBox.setOnCheckedChangeListener(this);
     }
 
-    private void initViewPager() {
-
-        mRecyclerViewPager = (LoopRecyclerViewPager) findViewById(R.id.viewpager);
-        LinearLayoutManager layout = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerViewPager.setLayoutManager(layout);
-        mRecyclerViewPager.setHasFixedSize(true);
-        mRecyclerViewPager.setAdapter(new RecyclerViewDemoAdpater(this));
-
-        mRecyclerViewPager.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
-
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int i, int i2) {
-//                mPositionText.setText("First: " + mRecyclerViewPager.getFirstVisiblePosition());
-                int childCount = mRecyclerViewPager.getChildCount();
-                int width = mRecyclerViewPager.getChildAt(0).getWidth();
-                int padding = (mRecyclerViewPager.getWidth() - width) / 2;
-
-                for (int j = 0; j < childCount; j++) {
-                    View v = recyclerView.getChildAt(j);
-                    //往左 从 padding 到 -(v.getWidth()-padding) 的过程中，由大到小
-                    float rate = 0;
-                    if (v.getLeft() <= padding) {
-                        if (v.getLeft() >= padding - v.getWidth()) {
-                            rate = (padding - v.getLeft()) * 1f / v.getWidth();
-                        } else {
-                            rate = 1;
-                        }
-                        v.setScaleY(1 - rate * 0.1f);
-                    } else {
-                        //往右 从 padding 到 recyclerView.getWidth()-padding 的过程中，由大到小
-                        if (v.getLeft() <= recyclerView.getWidth() - padding) {
-                            rate = (recyclerView.getWidth() - padding - v.getLeft()) * 1f / v.getWidth();
-                        }
-                        v.setScaleY(0.9f + rate * 0.1f);
-                    }
-                }
-            }
-        });
-
-        mRecyclerViewPager.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                if (mRecyclerViewPager.getChildCount() < 3) {
-                    if (mRecyclerViewPager.getChildAt(1) != null) {
-                        View v1 = mRecyclerViewPager.getChildAt(1);
-                        v1.setScaleY(0.9f);
-                    }
-                } else {
-                    if (mRecyclerViewPager.getChildAt(0) != null) {
-                        View v0 = mRecyclerViewPager.getChildAt(0);
-                        v0.setScaleY(0.9f);
-                    }
-                    if (mRecyclerViewPager.getChildAt(2) != null) {
-                        View v2 = mRecyclerViewPager.getChildAt(2);
-                        v2.setScaleY(0.9f);
-                    }
-                }
-
-            }
-        });
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mRecyclerViewPager != null) {
-            mRecyclerViewPager.onResume();
+        if (bannerView != null) {
+            bannerView.onResume();
         }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mRecyclerViewPager != null) {
-            mRecyclerViewPager.onPause();
+        if (bannerView != null) {
+            bannerView.onPause();
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+            case R.id.button1:
+                bannerView.setStyle(1);
+                break;
+            case R.id.button2:
+                bannerView.setStyle(2);
+                break;
+            case R.id.button3:
+                bannerView.setStyle(3);
+                break;
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            bannerView.startAutoLoop(1000);
+        } else {
+            bannerView.stopAutoLoop();
         }
     }
 }
