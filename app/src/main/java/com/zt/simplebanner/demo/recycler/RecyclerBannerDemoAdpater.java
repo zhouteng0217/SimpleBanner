@@ -1,4 +1,4 @@
-package com.zt.simplebanner.demo.recyclerview;
+package com.zt.simplebanner.demo.recycler;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zt.simplebanner.RecyclerBannerAdapter;
+import com.zt.simplebanner.recycler.RecyclerBannerAdapter;
 import com.zt.simplebanner.demo.R;
 
-
+/**
+ * 具体的banner界面的实现适配器
+ */
 public class RecyclerBannerDemoAdpater extends RecyclerBannerAdapter<String> {
 
 

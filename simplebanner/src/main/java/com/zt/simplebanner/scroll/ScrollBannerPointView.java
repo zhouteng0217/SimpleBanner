@@ -1,4 +1,4 @@
-package com.zt.simplebanner;
+package com.zt.simplebanner.scroll;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,34 +6,41 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
-public class RecyclerViewPointView extends LinearLayout implements LoopRecyclerViewPager.OnPageChangedListener {
+import com.zt.simplebanner.OnPageChangedListener;
+import com.zt.simplebanner.R;
 
-    private LoopRecyclerViewPager recyclerViewPager;
+public class ScrollBannerPointView extends LinearLayout implements OnPageChangedListener {
+
+    private Context mContext;
     private int count;
+    private AbsScrollBannerView scrollSlideView;
 
-    public RecyclerViewPointView(Context context) {
-        this(context, null);
+    public ScrollBannerPointView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initlialize(context);
     }
 
-    public RecyclerViewPointView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public ScrollBannerPointView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initlialize(context);
     }
 
-    public RecyclerViewPointView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
+    public ScrollBannerPointView(Context context) {
+        super(context);
+        initlialize(context);
     }
 
-    private void init() {
+    private void initlialize(Context context) {
+
+        this.mContext = context;
         setOrientation(LinearLayout.HORIZONTAL);
         setGravity(Gravity.CENTER);
     }
 
-    //在LoopRecyclerViewPager的Adapter设置完数据后调用
-    public void setRecyclerViewPager(LoopRecyclerViewPager recyclerViewPager) {
-        this.recyclerViewPager = recyclerViewPager;
-        this.count = recyclerViewPager == null ? 0 :
-                recyclerViewPager.getActualItemCount();
+    //必须在AbsScrollBannerView的bindData之后设置
+    public void setScrollBannerView(AbsScrollBannerView scrollSlideView) {
+        this.scrollSlideView = scrollSlideView;
+        this.count = scrollSlideView.getCount();
         initView();
     }
 
@@ -45,11 +52,11 @@ public class RecyclerViewPointView extends LinearLayout implements LoopRecyclerV
         setVisibility(View.VISIBLE);
         removeAllViews();
         for (int i = 0; i < count; i++) {
-            View point = new View(getContext());
+            View point = new View(mContext);
             setUnSelectorView(point);
             addView(point);
         }
-        recyclerViewPager.addOnPageChangedListener(this);
+        scrollSlideView.addOnPageChangedListener(this);
     }
 
     protected void setUnSelectorView(View point) {
@@ -78,3 +85,4 @@ public class RecyclerViewPointView extends LinearLayout implements LoopRecyclerV
         setUnSelectorView(getChildAt(oldPosition));
     }
 }
+

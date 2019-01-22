@@ -1,4 +1,4 @@
-package com.zt.simplebanner.demo.recyclerview;
+package com.zt.simplebanner.demo.recycler;
 
 
 import android.content.Context;
@@ -10,11 +10,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.zt.simplebanner.LoopRecyclerViewPager;
-import com.zt.simplebanner.RecyclerBannerAdapter;
-import com.zt.simplebanner.RecyclerViewPointView;
+import com.zt.simplebanner.OnBannerClickListener;
+import com.zt.simplebanner.recycler.LoopRecyclerViewPager;
+import com.zt.simplebanner.recycler.RecyclerViewPointView;
 import com.zt.simplebanner.demo.R;
 
+/**
+ * banner的具体实现和底下的指示器封装后的View
+ */
 public class RecyclerBannerView extends LinearLayout {
 
     private LoopRecyclerViewPager recyclerViewPager;
@@ -36,7 +39,7 @@ public class RecyclerBannerView extends LinearLayout {
     }
 
     private void initViews(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.view_recyclerview_banner, this);
+        LayoutInflater.from(context).inflate(R.layout.view_recycler_banner, this);
         recyclerViewPager = (LoopRecyclerViewPager) findViewById(R.id.recyclerview_pager);
         pointView = (RecyclerViewPointView) findViewById(R.id.point_view);
 
@@ -49,9 +52,9 @@ public class RecyclerBannerView extends LinearLayout {
         bannerAdpater = new RecyclerBannerDemoAdpater(getContext());
         recyclerViewPager.setAdapter(bannerAdpater);
 
-        bannerAdpater.setOnBannerItemClickListener(new RecyclerBannerAdapter.OnBannerItemClickListener() {
+        bannerAdpater.setOnBannerClickListener(new OnBannerClickListener() {
             @Override
-            public void onBannerItemClick(int position) {
+            public void onBannerClick(int position) {
                 int pos = recyclerViewPager.getActualItemCount() >= recyclerViewPager.getMinLoopStartCount() ? position - 1 : position;
                 if (pos >= 0 && pos < recyclerViewPager.getActualItemCount()) {
                     Toast.makeText(getContext(), "click: " + pos, Toast.LENGTH_SHORT).show();

@@ -17,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.recyclerview_demo:
-                startActivity(new Intent(this, RecyclerViewDemoActivity.class));
+                startActivity(new Intent(this, RecyclerBannerDemoActivity.class));
                 break;
             case R.id.scrollview_demo:
+                startActivity(new Intent(this, ScrollBannerDemoActivity.class));
                 break;
         }
     }

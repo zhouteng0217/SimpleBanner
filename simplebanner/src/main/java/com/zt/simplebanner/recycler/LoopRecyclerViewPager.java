@@ -1,4 +1,4 @@
-package com.zt.simplebanner;
+package com.zt.simplebanner.recycler;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
+
+import com.zt.simplebanner.OnPageChangedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,10 +249,6 @@ public class LoopRecyclerViewPager extends RecyclerView {
         if (onPageChangedListener != null) {
             onPageChangedListeners.add(onPageChangedListener);
         }
-    }
-
-    public interface OnPageChangedListener {
-        void OnPageChanged(int oldPosition, int newPosition);
     }
 
     public void onResume() {

@@ -1,8 +1,10 @@
-package com.zt.simplebanner;
+package com.zt.simplebanner.recycler;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.zt.simplebanner.OnBannerClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public abstract class RecyclerBannerAdapter<T> extends RecyclerView.Adapter<Recy
 
     protected List<T> list = new ArrayList<>();
     protected Context context;
-    private OnBannerItemClickListener onBannerItemClickListener;
+    private OnBannerClickListener onBannerClickListener;
 
     public RecyclerBannerAdapter(Context context) {
         this.context = context;
@@ -29,8 +31,8 @@ public abstract class RecyclerBannerAdapter<T> extends RecyclerView.Adapter<Recy
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (onBannerItemClickListener != null) {
-                        onBannerItemClickListener.onBannerItemClick(getAdapterPosition());
+                    if (onBannerClickListener != null) {
+                        onBannerClickListener.onBannerClick(getAdapterPosition());
                     }
                 }
             });
@@ -42,11 +44,7 @@ public abstract class RecyclerBannerAdapter<T> extends RecyclerView.Adapter<Recy
         return list == null ? 0 : list.size();
     }
 
-    public void setOnBannerItemClickListener(OnBannerItemClickListener onBannerItemClickListener) {
-        this.onBannerItemClickListener = onBannerItemClickListener;
-    }
-
-    public interface OnBannerItemClickListener {
-        void onBannerItemClick(int pos);
+    public void setOnBannerClickListener(OnBannerClickListener onBannerClickListener) {
+        this.onBannerClickListener = onBannerClickListener;
     }
 }
