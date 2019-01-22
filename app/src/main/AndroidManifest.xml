@@ -18,7 +18,12 @@
 
 
         <activity
-            android:name=".RecyclerViewDemoActivity"
+        android:name=".RecyclerBannerDemoActivity"
+        android:configChanges="keyboardHidden|orientation|locale"
+        android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ScrollBannerDemoActivity"
             android:configChanges="keyboardHidden|orientation|locale"
             android:screenOrientation="portrait" />
 

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zt.simplebanner.demo.recyclerview.RecyclerBannerView
+    <com.zt.simplebanner.demo.recycler.RecyclerBannerView
         android:id="@+id/recycler_banner_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

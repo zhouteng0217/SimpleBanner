@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.zt.simplebanner.LoopRecyclerViewPager
-        android:id="@+id/recyclerview_pager"
+    <com.zt.simplebanner.demo.scroll.ScrollBannerView
+        android:id="@+id/scroll_banner_view"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
 
-    <com.zt.simplebanner.RecyclerViewPointView
-        android:id="@+id/point_view"
+    <com.zt.simplebanner.scroll.ScrollBannerPointView
+        android:id="@+id/scroll_banner_point"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp" />
 
 </LinearLayout>

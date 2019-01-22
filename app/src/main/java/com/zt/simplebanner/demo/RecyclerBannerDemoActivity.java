@@ -10,16 +10,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 
-import com.zt.simplebanner.demo.recyclerview.RecyclerBannerView;
+import com.zt.simplebanner.demo.recycler.RecyclerBannerView;
 
-public class RecyclerViewDemoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
+public class RecyclerBannerDemoActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private RecyclerBannerView bannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.aty_recyclerview_demo);
+        setContentView(R.layout.aty_recyclerbanner_demo);
         bannerView = (RecyclerBannerView) findViewById(R.id.recycler_banner_view);
         bannerView.bindData();
 
