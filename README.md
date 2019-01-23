@@ -1,11 +1,11 @@
 # SimpleBanner
 本项目分别使用了RecyclerViev和HorizontalScrollView来实现自动轮播的banner, 用于学习和项目使用
 
-#效果展示
+# 效果展示
 ![](https://raw.githubusercontent.com/zhouteng0217/SimpleBanner/master/gif_banner.gif)
 
 
-#使用方式
+# 使用方式
 直接将源码引入到项目中使用，具体参考demo的实现
 
 # 原理说明
