@@ -20,14 +20,14 @@ public class RecyclerBannerDemoActivity extends AppCompatActivity implements Rad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_recyclerbanner_demo);
-        bannerView = (RecyclerBannerView) findViewById(R.id.recycler_banner_view);
+        bannerView = findViewById(R.id.recycler_banner_view);
         bannerView.bindData();
 
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.style_radio_group);
+        RadioGroup radioGroup = findViewById(R.id.style_radio_group);
         radioGroup.setOnCheckedChangeListener(this);
         radioGroup.check(R.id.button1);
 
-        CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
+        CheckBox checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(this);
     }
 

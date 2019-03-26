@@ -33,7 +33,7 @@ public class ScrollBannerView extends AbsScrollBannerView<String> {
     @Override
     protected View getExView(int postion, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.adp_recyclerview_item, parent, false);
-        TextView titleView = (TextView) view.findViewById(R.id.title);
+        TextView titleView = view.findViewById(R.id.title);
         titleView.setText(data.get(postion));
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getScreenWidth(context), ViewGroup.LayoutParams.WRAP_CONTENT);

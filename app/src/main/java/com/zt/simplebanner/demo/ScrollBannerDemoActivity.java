@@ -19,11 +19,11 @@ public class ScrollBannerDemoActivity extends AppCompatActivity implements OnBan
         super.onCreate(savedInstanceState);
         setContentView(R.layout.aty_scrollbanner_demo);
 
-        ScrollBannerView scrollBannerView = (ScrollBannerView) findViewById(R.id.scroll_banner_view);
+        ScrollBannerView scrollBannerView = findViewById(R.id.scroll_banner_view);
         scrollBannerView.bindData(getData());
         scrollBannerView.setOnBannerClickListener(this);
 
-        ScrollBannerPointView pointsView = (ScrollBannerPointView) findViewById(R.id.scroll_banner_point);
+        ScrollBannerPointView pointsView = findViewById(R.id.scroll_banner_point);
 
         //必须在scrollBannerView bindData之后设置
         pointsView.setScrollBannerView(scrollBannerView);

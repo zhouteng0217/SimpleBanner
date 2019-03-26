@@ -40,8 +40,8 @@ public class RecyclerBannerView extends LinearLayout {
 
     private void initViews(Context context) {
         LayoutInflater.from(context).inflate(R.layout.view_recycler_banner, this);
-        recyclerViewPager = (LoopRecyclerViewPager) findViewById(R.id.recyclerview_pager);
-        pointView = (RecyclerViewPointView) findViewById(R.id.point_view);
+        recyclerViewPager = findViewById(R.id.recyclerview_pager);
+        pointView = findViewById(R.id.point_view);
 
         LinearLayoutManager layout = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         recyclerViewPager.setLayoutManager(layout);
