@@ -53,7 +53,7 @@ public class RecyclerBannerDemoAdpater extends RecyclerBannerAdapter<String> {
 
         private SimpleViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+            title = view.findViewById(R.id.title);
         }
     }
 }
