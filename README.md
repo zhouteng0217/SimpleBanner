@@ -1,12 +1,78 @@
 # SimpleBanner
 本项目分别使用了RecyclerViev和HorizontalScrollView来实现自动轮播的banner, 用于学习和项目使用
 
+[![](https://jitpack.io/v/zhouteng0217/SimpleBanner.svg)](https://jitpack.io/#zhouteng0217/SimpleBanner)
+
+
 # 效果展示
 ![](https://raw.githubusercontent.com/zhouteng0217/SimpleBanner/master/gif_banner.gif)
 
 
-# 使用方式
-直接将源码引入到项目中使用，具体参考demo的实现
+# 使用
+
+## 1.在project的build.gradle中添加
+
+```
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+## 2.在module中添加依赖
+
+```
+dependencies {
+   	implementation 'com.github.zhouteng0217:SimpleBanner:1.0.1'
+}
+```
+
+## 3.基于RecyclerView的Banner使用
+
+```
+//继承RecyclerBannerAdapter，实现banner的具体布局
+
+public class RecyclerBannerDemoAdpater extends RecyclerBannerAdapter<String> {
+
+
+    @NonNull
+    @Override
+    public RecyclerBannerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerBannerViewHolder recyclerBannerViewHolder, int i) {
+
+    }
+}
+```
+
+## 4.基于HorizontalScrollView的使用
+
+```
+public class ScrollBannerView extends AbsScrollBannerView<String> {
+
+    public ScrollBannerView(Context context) {
+        super(context);
+    }
+
+    public ScrollBannerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public ScrollBannerView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected View getExView(int postion, ViewGroup parent) {
+        View view = LayoutInflater.from(context).inflate(R.layout.adp_recyclerview_item, parent, false);
+        return view;
+    }
+}
+```
 
 # 原理说明
 

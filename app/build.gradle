@@ -26,6 +26,6 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:' + rootProject.ext.supportLibraryVersion
     implementation project(path: ':simplebanner')
 
-//    implementation 'com.github.zhouteng0217:SimpleBanner:1.0.0'
+//    implementation 'com.github.zhouteng0217:SimpleBanner:1.0.1'
 }
 
