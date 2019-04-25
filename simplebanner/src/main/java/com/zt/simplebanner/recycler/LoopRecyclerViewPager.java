@@ -171,7 +171,9 @@ public class LoopRecyclerViewPager extends RecyclerView {
     }
 
     public void scrollToItem(int pos) {
-        scrollToItem(currentPosition, pos);
+        if (mViewPagerAdapter.isSupportLoop()) {
+            scrollToItem(currentPosition, pos);
+        }
     }
 
     @Override
