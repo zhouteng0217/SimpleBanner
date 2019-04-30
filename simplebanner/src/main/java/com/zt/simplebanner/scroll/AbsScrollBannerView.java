@@ -203,7 +203,9 @@ public abstract class AbsScrollBannerView<T> extends HorizontalScrollView {
     }
 
     public void scrollToItem(int pos) {
-        scrollToItem(curPos, pos);
+        if (getCount() > 1) {
+            scrollToItem(curPos, pos);
+        }
     }
 
     public void startLoop(long time) {
