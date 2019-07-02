@@ -12,6 +12,7 @@ import android.view.ViewConfiguration;
 
 import com.zt.simplebanner.OnPageChangedListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,6 +213,10 @@ public class LoopRecyclerViewPager extends RecyclerView {
         return currentPosition;
     }
 
+    public long getLoopTimeInterval() {
+        return loopTimeInterval;
+    }
+
     public int getMinLoopStartCount() {
         return minLoopStartCount;
     }
@@ -237,15 +242,30 @@ public class LoopRecyclerViewPager extends RecyclerView {
         }
     }
 
-    private Runnable loopRunnable = new Runnable() {
+    static class LoopRunnable implements Runnable {
+
+        private WeakReference<LoopRecyclerViewPager> weakReference;
+
+        private LoopRunnable(LoopRecyclerViewPager viewPager) {
+            weakReference = new WeakReference<>(viewPager);
+        }
+
         @Override
         public void run() {
-            scrollToItem(currentPosition + 1);
+            LoopRecyclerViewPager viewPager = weakReference.get();
+            if (viewPager == null) {
+                return;
+            }
+            int currentPosition = viewPager.getCurrentPosition();
+            viewPager.scrollToItem(currentPosition + 1);
+            long loopTimeInterval = viewPager.getLoopTimeInterval();
             if (loopTimeInterval > 0) {
-                postDelayed(this, loopTimeInterval);
+                viewPager.postDelayed(this, loopTimeInterval);
             }
         }
-    };
+    }
+
+    private Runnable loopRunnable = new LoopRunnable(this);
 
     public void addOnPageChangedListener(OnPageChangedListener onPageChangedListener) {
         if (onPageChangedListener != null) {
