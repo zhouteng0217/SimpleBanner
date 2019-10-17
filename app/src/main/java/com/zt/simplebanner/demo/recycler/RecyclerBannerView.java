@@ -65,7 +65,7 @@ public class RecyclerBannerView extends LinearLayout {
         //一定要在adapter的数据源设置完成后，调用
         pointView.setRecyclerViewPager(recyclerViewPager);
 
-        recyclerViewPager.scrollToItem(1);
+        recyclerViewPager.scrollToItem(0, 1);
     }
 
     //style2和3适用于数据源列表有3条及以上数据的情况
