@@ -88,7 +88,7 @@ public class RecyclerBannerView extends LinearLayout {
                 bannerAdpater.setItemPadding(10);
                 break;
         }
-        recyclerViewPager.scrollToItem(1);
+        recyclerViewPager.removeOnScrollListener(onScrollListener);
         recyclerViewPager.addOnScrollListener(onScrollListener);
     }
 

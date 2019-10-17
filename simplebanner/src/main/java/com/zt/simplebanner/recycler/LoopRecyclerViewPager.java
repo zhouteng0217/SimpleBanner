@@ -66,9 +66,6 @@ public class LoopRecyclerViewPager extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         mViewPagerAdapter = ensureRecyclerViewPagerAdapter(adapter);
         super.setAdapter(mViewPagerAdapter);
-        if (mViewPagerAdapter.isSupportLoop()) {
-            scrollToItem(1);
-        }
     }
 
     @SuppressWarnings("unchecked")

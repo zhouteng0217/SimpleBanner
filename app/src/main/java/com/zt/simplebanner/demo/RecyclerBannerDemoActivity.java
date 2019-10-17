@@ -25,7 +25,6 @@ public class RecyclerBannerDemoActivity extends AppCompatActivity implements Rad
 
         RadioGroup radioGroup = findViewById(R.id.style_radio_group);
         radioGroup.setOnCheckedChangeListener(this);
-        radioGroup.check(R.id.button1);
 
         CheckBox checkBox = findViewById(R.id.checkbox);
         checkBox.setOnCheckedChangeListener(this);
