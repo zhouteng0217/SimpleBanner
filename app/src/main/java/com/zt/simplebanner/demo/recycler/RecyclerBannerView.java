@@ -70,6 +70,7 @@ public class RecyclerBannerView extends LinearLayout {
 
     //style2和3适用于数据源列表有3条及以上数据的情况
     public void setStyle(int style) {
+        bindData();
         this.style = style;
         switch (style) {
             case 1:
