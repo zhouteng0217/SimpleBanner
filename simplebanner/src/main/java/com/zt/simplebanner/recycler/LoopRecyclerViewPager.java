@@ -1,6 +1,7 @@
 package com.zt.simplebanner.recycler;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
 
     private List<OnPageChangedListener> onPageChangedListeners = new ArrayList<>();
 
+    private Handler mHandler = new Handler();
 
     public LoopRecyclerViewPager(Context context) {
         this(context, null);
@@ -224,18 +226,18 @@ public class LoopRecyclerViewPager extends RecyclerView {
     }
 
     public void startLoop(long time) {
-        removeCallbacks(loopRunnable);
+        mHandler.removeCallbacks(loopRunnable);
         loopTimeInterval = time;
         if (loopTimeInterval > 0) {
             isLooping = true;
-            postDelayed(loopRunnable, loopTimeInterval);
+            mHandler.postDelayed(loopRunnable, loopTimeInterval);
         }
     }
 
     public void stopLoop() {
         if (loopTimeInterval > 0) {
             isLooping = false;
-            removeCallbacks(loopRunnable);
+            mHandler.removeCallbacks(loopRunnable);
         }
     }
 
@@ -257,7 +259,7 @@ public class LoopRecyclerViewPager extends RecyclerView {
             viewPager.scrollToItem(currentPosition + 1);
             long loopTimeInterval = viewPager.getLoopTimeInterval();
             if (loopTimeInterval > 0) {
-                viewPager.postDelayed(this, loopTimeInterval);
+                viewPager.mHandler.postDelayed(this, loopTimeInterval);
             }
         }
     }
